@@ -15,7 +15,12 @@
       <!-- langues -->
       <div class="field">
         <label for="langues">Langues</label>
-        <input id="langues" type="text" placeholder="Langues" v-model="langues" />
+        <input
+          id="langues"
+          type="text"
+          placeholder="Langues"
+          v-model="langues"
+        />
       </div>
       <!-- projets -->
       <!-- interests -->
@@ -30,16 +35,29 @@
 
       <button id="generate-pdf" @click="generatePDF">Générer le PDF</button>
     </div>
+    <!-- cv -->
     <div id="right-panel">
       <div id="cv">
         <div id="left-panel-cv">
           <section class="head sub-section">
-            <h1>{{ name }}</h1>
-            <h2>{{job}}</h2>
+            <div class="container-img">
+              <div class="img">
+                <img src="./assets/photo.png" />
+              </div>
+            </div>
+            <div>
+              <!-- <h1>{{ name }}</h1> -->
+              <h1 class="name">
+                <span class="firstname">Michaël</span>
+                <span>BECQUER</span>
+              </h1>
+              <h2 class="job">{{ job }}</h2>
+            </div>
           </section>
           <div>
             <section class="sub-section">
               <h3 class="section-title">CONTACT</h3>
+
               <p class="link">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +119,7 @@
                 <a
                   href="https://linkedin.com/in/michaël-becquer-7750a731a"
                   target="_blank"
-                  >linkedin.com/in/michaël-becquer-7750a731a</a
+                  >linkedin.com/in/michaelbecquer</a
                 >
               </p>
               <p class="link">
@@ -126,6 +144,26 @@
                   >github.com/MiKL-B</a
                 >
               </p>
+              <p class="link">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-map-pin"
+                >
+                  <path
+                    d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+                  />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span>54000 Nancy</span>
+              </p>
             </section>
             <section class="sub-section">
               <h3 class="section-title">LANGUES</h3>
@@ -134,48 +172,12 @@
             <section class="sub-section">
               <h3 class="section-title">PROJETS REALISES</h3>
               <p class="link">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-briefcase-business"
-                >
-                  <path d="M12 12h.01" />
-                  <path d="M16 6V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
-                  <path d="M22 13a18.15 18.15 0 0 1-20 0" />
-                  <rect width="20" height="14" x="2" y="6" rx="2" />
-                </svg>
                 <span>Portfolio:</span>
                 <a href="https://mikl-b.github.io" target="_blank"
                   >mikl-b.github.io</a
                 >
               </p>
               <p class="link">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-coffee"
-                >
-                  <path d="M10 2v2" />
-                  <path d="M14 2v2" />
-                  <path
-                    d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"
-                  />
-                  <path d="M6 2v2" />
-                </svg>
                 <span>Fika CSS:</span>
                 <a href="https://fika-css.vercel.app" target="_blank"
                   >fika-css.vercel.app</a
@@ -194,10 +196,11 @@
         </div>
         <div id="right-panel-cv">
           <p class="text-profile">
-            Développeur web frontend junior passionné par les technologies web,
-            doté de compétences en HTML, CSS et JavaScript, ainsi que d'une
-            expérience en Vue.js, prêt à participer à des projets innovants au
-            sein d'une équipe dynamique.
+            Développeur Frontend Vue.js junior. Passionné par les technologies
+            web. Mes compétences en HTML, CSS et JavaScript sont complétées par
+            une expérience significative avec Vue.js Je suis prêt à participer
+            et mettre en oeuvre des projets innovants, de la conception à la
+            mise en production, au sein d'une équipe dynamique.
           </p>
           <section>
             <h3 class="section-title">EXPERIENCE PROFESSIONNELLE</h3>
@@ -211,6 +214,7 @@
                 <li>
                   Analyse des besoins des clients de la société Compusoft.
                 </li>
+                <li>Application de la méthode Agile (Scrum)</li>
               </ul>
             </div>
             <div class="sub-section">
@@ -226,6 +230,8 @@
                   Collaboration à la gestion d'un projet informatique et à
                   l'organisation de l'environnement de développement.
                 </li>
+                <li>Utilisation du système de gestion de version Git.</li>
+                <li>Application de la méthode Agile (Scrum)</li>
               </ul>
             </div>
             <div class="sub-section">
@@ -234,30 +240,31 @@
               </h4>
               <p class="date">mars 2021 - mai 2021</p>
               <ul>
-                <li>Maquettage de l'application.</li>
                 <li>
-                  Développement de l'interface utilisateur web dynamique avec
-                  une solution de gestion de contenu et e-commerce.
+                  Conception et intégration de la maquette pour le web et
+                  mobiles.
                 </li>
                 <li>
-                  Développement de la partie backend de l'application, ainsi que
-                  des composants d'accès aux données.
+                  Conception et développement de l'interface utilisateur web
+                  dynamique et responsive, avec une solution de gestion de
+                  contenu et e-commerce.
                 </li>
+                <li>Conception de la base de données.</li>
+                <li>Développement de la partie backend.</li>
+                <li>Développement des composants d'accès aux données.</li>
+                <li>Mise en place des tests à l'aide du framework Cypress.</li>
+                <li>Application de la méthode Agile (Kanban)</li>
               </ul>
-              <ul>
-                <li>
-                  <a
-                    href="https://github.com/MiKL-B/kyosai-front/tree/develop/kyosai-front"
-                    >github.com/MiKL-B/kyosai-front/tree/develop/kyosai-front</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/MiKL-B/kyosai-back/tree/develop/kyosai-back"
-                    >github.com/MiKL-B/kyosai-back/tree/develop/kyosai-back</a
-                  >
-                </li>
-              </ul>
+              <div class="project-link">
+                <a
+                  href="https://github.com/MiKL-B/kyosai-front/tree/develop/kyosai-front"
+                  >github.com/MiKL-B/kyosai-front/tree/develop/kyosai-front</a
+                >
+                <a
+                  href="https://github.com/MiKL-B/kyosai-back/tree/develop/kyosai-back"
+                  >github.com/MiKL-B/kyosai-back/tree/develop/kyosai-back</a
+                >
+              </div>
             </div>
           </section>
           <section>
@@ -275,16 +282,28 @@
           </section>
           <section>
             <h3 class="section-title">COMPETENCES</h3>
-            <div>
+            <div class="skills">
               <ul>
-                <li>
+                <span></span>
+                <li>HTML5, CSS3</li>
+                <li>TailwindCSS</li>
+                <li>JavaScript(ES6)</li>
+                <li>Vue.js, Vue router, Vuex / Pinia, Composition API</li>
+                <li>Node.js, npm, Vite</li>
+                <li>Intégration API REST</li>
+                <li>Responsive design</li>
+                <li>Tests unitaires, E2E</li>
+                <li>Git</li>
+                <li>Accessibilité web</li>
+                <li>SEO</li>
+                <!-- <li>
                   Conception de maquettes fonctionnelles pour les applications
                   web et mobiles.
                 </li>
                 <li>
                   Conception d'interface utilisateur web dynamique responsive.
-                </li>
-                <li>
+                </li> -->
+                <!-- <li>
                   Connaissances en technologies web modernes frontend (HTML5,
                   CSS3, JavaScript, Vue.js, TailwindCSS) et backend (Node.js).
                 </li>
@@ -292,14 +311,19 @@
                 <li>
                   Conception de la base de données et développement des
                   composants d'accès aux données.
-                </li>
-                <li>Utilisation de bibliothèques de test (Cypress, Jest).</li>
-                <li>Outil de contrôle de versions Git.</li>
-                <li>Application de la méthode Agile (Scrum, Kanban).</li>
-                <li>
+                </li> -->
+                <!-- <li>Utilisation de bibliothèques de test (Cypress, Jest).</li> -->
+                <!-- <li>Outil de contrôle de versions Git.</li> -->
+                <!-- <li>Application de la méthode Agile (Scrum, Kanban).</li> -->
+                <!-- <li>
                   Connaissances des principes d'accessibilité web, du SEO, ainsi
                   que des bonnes pratiques de développement frontend.
-                </li>
+                </li> -->
+              </ul>
+              <ul>
+                <li>Communication et collaboration</li>
+                <li>Résolution de problèmes</li>
+                <li>Esprit d'équipe</li>
               </ul>
             </div>
           </section>
@@ -315,7 +339,7 @@ export default {
   data() {
     return {
       name: "Michaël BECQUER",
-      job:"DEVELOPPEUR WEB FRONTEND",
+      job: "DEVELOPPEUR WEB FRONTEND",
       interests: [
         { value: "Lecture" },
         { value: "Peinture" },
@@ -325,9 +349,7 @@ export default {
         { value: "Moto" },
         { value: "Veille technologique" },
       ],
-      year: new Date().getFullYear(),
-      extension: ".pdf",
-      CVName: "CV_Michaël_BECQUER_" + this.year + this.extension,
+      CVName: "CV_Michaël_BECQUER",
     };
   },
   methods: {
@@ -342,7 +364,7 @@ export default {
       const opt = {
         //   margin: 0.5,
         filename: this.CVName,
-        image: { type: "jpeg", quality: 0.98 },
+        image: { type: "png", quality: 0.98 },
         html2canvas: { scale: 2 },
         jsPDF: { unit: "cm", format: "a4", orientation: "portrait" },
       };
