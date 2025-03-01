@@ -88,7 +88,7 @@ img {
   margin-bottom: 1rem;
   margin: 0 0.2rem;
 }
-.firstname{
+.firstname {
   font-weight: 300;
 }
 .job {
@@ -113,6 +113,10 @@ a {
   display: flex;
   align-items: center;
   gap: 0.2rem;
+}
+
+.project{
+  margin-right:0.5rem;
 }
 a::after {
   content: "";
@@ -143,15 +147,15 @@ a {
   content: "“";
   display: inline-flex;
   font-size: 24px;
-  height:1rem;
-  color:var(--green-05);
+  height: 1rem;
+  color: var(--green-05);
 }
 .text-profile::after {
   content: "“";
   font-size: 24px;
   position: absolute;
-  bottom:-10px;
-  color:var(--green-05);
+  bottom: -10px;
+  color: var(--green-05);
 }
 .skills {
   display: flex;

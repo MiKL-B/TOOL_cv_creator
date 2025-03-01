@@ -1,10 +1,25 @@
 <template>
   <div id="container">
     <div id="left-panel">
+      <!-- photo -->
+     <!--  <div class="field">
+        <label for="photo">Photo</label>
+        <input type="file" @change="handleFileUpload" accept="image/*" />
+      </div> -->
       <!-- name -->
       <div class="field">
         <label for="name">Name</label>
         <input id="name" type="text" placeholder="Name" v-model="name" />
+      </div>
+      <!-- firstname -->
+      <div class="field">
+        <label for="firstname">Firstname</label>
+        <input
+          id="firstname"
+          type="text"
+          placeholder="Firstname"
+          v-model="firstname"
+        />
       </div>
       <!-- job -->
       <div class="field">
@@ -12,17 +27,44 @@
         <input id="job" type="text" placeholder="Job" v-model="job" />
       </div>
       <!-- contact -->
-      <!-- langues -->
+      <!-- languages -->
       <div class="field">
-        <label for="langues">Langues</label>
-        <input
-          id="langues"
-          type="text"
-          placeholder="Langues"
-          v-model="langues"
-        />
+        <label for="languages">Langues</label>
+        <div v-for="(item, index) in languages" :key="index">
+          <input v-model="item.value" placeholder="Entrer une valeur" />
+          <button @click="removeLanguage(index)">Remove</button>
+        </div>
+        <button @click="addLanguage">Add</button>
       </div>
       <!-- projets -->
+      <div class="field">
+        <label for="projects">Projects</label>
+        <div v-for="(item, index) in projects" :key="index">
+          <input v-model="item.label" placeholder="Entrer le nom" />
+          <input v-model="item.link" placeholder="Entrer le lien" />
+          <input v-model="item.value" placeholder="Entrer la valeur" />
+          <button @click="removeProject(index)">Remove</button>
+        </div>
+        <button @click="addProject">Add</button>
+      </div>
+      <!-- hard skills -->
+      <div class="field">
+        <label for="hardskills">Hard skills</label>
+        <div v-for="(item, index) in hardskills" :key="index">
+          <input v-model="item.value" placeholder="Entrer la valeur" />
+          <button @click="removeHardSkill(index)">Remove</button>
+        </div>
+        <button @click="addHardSkill">Add</button>
+      </div>
+      <!-- soft skills -->
+      <div class="field">
+        <label for="softskills">Soft skills</label>
+        <div v-for="(item, index) in softskills" :key="index">
+          <input v-model="item.value" placeholder="Entrer la valeur" />
+          <button @click="removeSoftSkill(index)">Remove</button>
+        </div>
+        <button @click="addSoftSkill">Add</button>
+      </div>
       <!-- interests -->
       <div class="field">
         <label for="interest">Interests</label>
@@ -30,7 +72,7 @@
           <input v-model="item.value" placeholder="Entrer une valeur" />
           <button @click="removeInterest(index)">Remove</button>
         </div>
-        <button @click="addInterest">Add interest</button>
+        <button @click="addInterest">Add</button>
       </div>
 
       <button id="generate-pdf" @click="generatePDF">Générer le PDF</button>
@@ -43,13 +85,14 @@
             <div class="container-img">
               <div class="img">
                 <img src="./assets/photo.png" />
+                <!-- <img v-if="imageUrl" :src="imageUrl" /> -->
               </div>
             </div>
             <div>
               <!-- <h1>{{ name }}</h1> -->
               <h1 class="name">
-                <span class="firstname">Michaël</span>
-                <span>BECQUER</span>
+                <span class="firstname">{{ firstname }}</span>
+                <span>{{ name }}</span>
               </h1>
               <h2 class="job">{{ job }}</h2>
             </div>
@@ -164,25 +207,48 @@
                 </svg>
                 <span>54000 Nancy</span>
               </p>
+              <p class="link">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="lucide lucide-car"
+                >
+                  <path
+                    d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"
+                  />
+                  <circle cx="7" cy="17" r="2" />
+                  <path d="M9 17h6" />
+                  <circle cx="17" cy="17" r="2" />
+                </svg>
+                <span>Permis B</span>
+              </p>
             </section>
             <section class="sub-section">
               <h3 class="section-title">LANGUES</h3>
-              <p>Anglais</p>
+
+              <ul>
+                <li v-for="(language, index) in languages" :key="index">
+                  {{ language.value }}
+                </li>
+              </ul>
             </section>
             <section class="sub-section">
               <h3 class="section-title">PROJETS REALISES</h3>
-              <p class="link">
-                <span>Portfolio:</span>
-                <a href="https://mikl-b.github.io" target="_blank"
-                  >mikl-b.github.io</a
-                >
-              </p>
-              <p class="link">
-                <span>Fika CSS:</span>
-                <a href="https://fika-css.vercel.app" target="_blank"
-                  >fika-css.vercel.app</a
-                >
-              </p>
+              <ul>
+                <li v-for="project in projects">
+                  <span class="project">{{ project.label }}</span>
+                  <a :href="project.link" target="_blank">{{
+                    project.value
+                  }}</a>
+                </li>
+              </ul>
             </section>
             <section class="sub-section">
               <h3 class="section-title">CENTRES D'INTERET</h3>
@@ -196,11 +262,11 @@
         </div>
         <div id="right-panel-cv">
           <p class="text-profile">
-            Développeur Frontend Vue.js junior. Passionné par les technologies
-            web. Mes compétences en HTML, CSS et JavaScript sont complétées par
-            une expérience significative avec Vue.js Je suis prêt à participer
-            et mettre en oeuvre des projets innovants, de la conception à la
-            mise en production, au sein d'une équipe dynamique.
+            Développeur Frontend Vue.js. Passionné par les technologies web. Mes
+            compétences en HTML, CSS et JavaScript sont complétées par une
+            expérience significative avec Vue.js Je suis prêt à participer et
+            mettre en oeuvre des projets innovants, de la conception à la mise
+            en production, au sein d'une équipe dynamique.
           </p>
           <section>
             <h3 class="section-title">EXPERIENCE PROFESSIONNELLE</h3>
@@ -284,46 +350,14 @@
             <h3 class="section-title">COMPETENCES</h3>
             <div class="skills">
               <ul>
-                <span></span>
-                <li>HTML5, CSS3</li>
-                <li>TailwindCSS</li>
-                <li>JavaScript(ES6)</li>
-                <li>Vue.js, Vue router, Vuex / Pinia, Composition API</li>
-                <li>Node.js, npm, Vite</li>
-                <li>Intégration API REST</li>
-                <li>Responsive design</li>
-                <li>Tests unitaires, E2E</li>
-                <li>Git</li>
-                <li>Accessibilité web</li>
-                <li>SEO</li>
-                <!-- <li>
-                  Conception de maquettes fonctionnelles pour les applications
-                  web et mobiles.
+                <li v-for="skill in hardskills">
+                  {{ skill.value }}
                 </li>
-                <li>
-                  Conception d'interface utilisateur web dynamique responsive.
-                </li> -->
-                <!-- <li>
-                  Connaissances en technologies web modernes frontend (HTML5,
-                  CSS3, JavaScript, Vue.js, TailwindCSS) et backend (Node.js).
-                </li>
-                <li>Méthodes d'intégration API RESTful.</li>
-                <li>
-                  Conception de la base de données et développement des
-                  composants d'accès aux données.
-                </li> -->
-                <!-- <li>Utilisation de bibliothèques de test (Cypress, Jest).</li> -->
-                <!-- <li>Outil de contrôle de versions Git.</li> -->
-                <!-- <li>Application de la méthode Agile (Scrum, Kanban).</li> -->
-                <!-- <li>
-                  Connaissances des principes d'accessibilité web, du SEO, ainsi
-                  que des bonnes pratiques de développement frontend.
-                </li> -->
               </ul>
               <ul>
-                <li>Communication et collaboration</li>
-                <li>Résolution de problèmes</li>
-                <li>Esprit d'équipe</li>
+                <li v-for="skill in softskills">
+                  {{ skill.value }}
+                </li>
               </ul>
             </div>
           </section>
@@ -338,8 +372,46 @@ export default {
   name: "App",
   data() {
     return {
-      name: "Michaël BECQUER",
+      fileName: null,
+      imageUrl: null,
+      name: "BECQUER",
+      firstname:"Michaël",
       job: "DEVELOPPEUR WEB FRONTEND",
+      languages: [{ value: "Français" }, { value: "Anglais" }],
+      projects: [
+        {
+          label: "Portfolio",
+          link: "https://mikl-b.github.io",
+          value: "mikl-b.github.io",
+        },
+        {
+          label: "Site",
+          link: "https://github.com/MiKL-B/ecommerce",
+          value: "/MiKL-B/ecommerce",
+        },
+        {
+          label: "Fika-CSS",
+          link: "https://fika-css.vercel.app",
+          value: "fika-css.vercel.app",
+        },
+      ],
+      hardskills: [
+        { value: "HTML5, CSS3,JavaScript(ES6)" },
+        { value: "Vue.js, Vue router, Vuex / Pinia, Composition API" },
+        { value: "TailwindCSS" },
+        { value: "Node.js, npm, Vite" },
+        { value: "Intégration API REST" },
+        { value: "Responsive design" },
+        { value: "Tests unitaires, E2E" },
+        { value: "Git" },
+        { value: "Accessibilité web" },
+        { value: "SEO" },
+      ],
+      softskills: [
+        { value: "Communication et collaboration" },
+        { value: "Résolution de problèmes" },
+        { value: "Esprit d'équipe" },
+      ],
       interests: [
         { value: "Lecture" },
         { value: "Peinture" },
@@ -349,16 +421,58 @@ export default {
         { value: "Moto" },
         { value: "Veille technologique" },
       ],
+
       CVName: "CV_Michaël_BECQUER",
     };
   },
   methods: {
+    // photo
+    handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (file) {
+        this.fileName = file.name; // On stocke le nom du fichier sélectionné
+        this.imageUrl = URL.createObjectURL(file); // On crée l'URL de l'objet pour l'image
+      } else {
+        this.fileName = null;
+        this.imageUrl = null; // Réinitialiser l'URL d'image si aucun fichier n'est sélectionné
+      }
+    },
+    // language
+    addLanguage() {
+      this.languages.push({ value: "" });
+    },
+    removeLanguage(index) {
+      this.languages.splice(index, 1);
+    },
+    // project
+    addProject() {
+      this.projects.push({ value: "" });
+    },
+    removeProject(index) {
+      this.projects.splice(index, 1);
+    },
+    // hard skills
+    addHardSkill() {
+      this.hardskills.push({ value: "" });
+    },
+    removeHardSkill(index) {
+      this.hardskills.splice(index, 1);
+    },
+    // soft skills
+    addSoftSkill() {
+      this.softskills.push({ value: "" });
+    },
+    removeSoftSkill(index) {
+      this.softskills.splice(index, 1);
+    },
+    // interests
     addInterest() {
       this.interests.push({ value: "" });
     },
     removeInterest(index) {
       this.interests.splice(index, 1);
     },
+    // pdf
     generatePDF() {
       const element = document.getElementById("cv");
       const opt = {
