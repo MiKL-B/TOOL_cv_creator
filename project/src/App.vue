@@ -1,11 +1,18 @@
 <template>
   <div id="container">
-    <div id="left-panel">
+    <!--  <ul id="sortable1" class="connectedSortable">
+      <li v-for="item in list1" :key="item">{{ item }}</li>
+    </ul>
+    <ul id="sortable2" class="connectedSortable">
+      <li v-for="item in list2" :key="item">{{ item }}</li>
+    </ul> -->
+    <button @click="isOpen =!isOpen">Menu</button>
+    <div id="left-panel" v-if="isOpen">
       <!-- photo -->
-     <!--  <div class="field">
+      <div class="field">
         <label for="photo">Photo</label>
         <input type="file" @change="handleFileUpload" accept="image/*" />
-      </div> -->
+      </div>
       <!-- name -->
       <div class="field">
         <label for="name">Name</label>
@@ -84,8 +91,8 @@
           <section class="head sub-section">
             <div class="container-img">
               <div class="img">
-                <img src="./assets/photo.png" />
-                <!-- <img v-if="imageUrl" :src="imageUrl" /> -->
+                <img v-if="imageUrl" :src="imageUrl" />
+                <img v-else src="./assets/photo.png" />
               </div>
             </div>
             <div>
@@ -98,165 +105,170 @@
             </div>
           </section>
           <div>
-            <section class="sub-section">
-              <h3 class="section-title">CONTACT</h3>
+            <section id="sortable">
+              <!-- contact -->
+              <div class="sub-section sortable-section">
+                <h3 class="section-title">CONTACT</h3>
 
-              <p class="link">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-phone"
-                >
-                  <path
-                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-                  />
-                </svg>
-                <span>06.89.01.20.66</span>
-              </p>
-              <p class="link">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-mail"
-                >
-                  <rect width="20" height="16" x="2" y="4" rx="2" />
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                </svg>
-                <a href="mailto:michaelbecquer@protonmail.com"
-                  >michaelbecquer@protonmail.com</a
-                >
-              </p>
-              <p class="link">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-linkedin"
-                >
-                  <path
-                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-                  />
-                  <rect width="4" height="12" x="2" y="9" />
-                  <circle cx="4" cy="4" r="2" />
-                </svg>
-                <a
-                  href="https://linkedin.com/in/michaël-becquer-7750a731a"
-                  target="_blank"
-                  >linkedin.com/in/michaelbecquer</a
-                >
-              </p>
-              <p class="link">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-github"
-                >
-                  <path
-                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
-                  />
-                  <path d="M9 18c-4.51 2-5-2-7-2" />
-                </svg>
-                <a href="https://github.com/MiKL-B" target="_blank"
-                  >github.com/MiKL-B</a
-                >
-              </p>
-              <p class="link">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-map-pin"
-                >
-                  <path
-                    d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
-                  />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-                <span>54000 Nancy</span>
-              </p>
-              <p class="link">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-car"
-                >
-                  <path
-                    d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"
-                  />
-                  <circle cx="7" cy="17" r="2" />
-                  <path d="M9 17h6" />
-                  <circle cx="17" cy="17" r="2" />
-                </svg>
-                <span>Permis B</span>
-              </p>
-            </section>
-            <section class="sub-section">
-              <h3 class="section-title">LANGUES</h3>
-
-              <ul>
-                <li v-for="(language, index) in languages" :key="index">
-                  {{ language.value }}
-                </li>
-              </ul>
-            </section>
-            <section class="sub-section">
-              <h3 class="section-title">PROJETS REALISES</h3>
-              <ul>
-                <li v-for="project in projects">
-                  <span class="project">{{ project.label }}</span>
-                  <a :href="project.link" target="_blank">{{
-                    project.value
-                  }}</a>
-                </li>
-              </ul>
-            </section>
-            <section class="sub-section">
-              <h3 class="section-title">CENTRES D'INTERET</h3>
-              <ul>
-                <li v-for="(interest, index) in interests" :key="index">
-                  {{ interest.value }}
-                </li>
-              </ul>
+                <p class="link">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-phone"
+                  >
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                    />
+                  </svg>
+                  <span>06.89.01.20.66</span>
+                </p>
+                <p class="link">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-mail"
+                  >
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                  </svg>
+                  <a href="mailto:michaelbecquer@protonmail.com"
+                    >michaelbecquer@protonmail.com</a
+                  >
+                </p>
+                <p class="link">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-linkedin"
+                  >
+                    <path
+                      d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                    />
+                    <rect width="4" height="12" x="2" y="9" />
+                    <circle cx="4" cy="4" r="2" />
+                  </svg>
+                  <a
+                    href="https://linkedin.com/in/michaël-becquer-7750a731a"
+                    target="_blank"
+                    >linkedin.com/in/michaelbecquer</a
+                  >
+                </p>
+                <p class="link">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-github"
+                  >
+                    <path
+                      d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                    />
+                    <path d="M9 18c-4.51 2-5-2-7-2" />
+                  </svg>
+                  <a href="https://github.com/MiKL-B" target="_blank"
+                    >github.com/MiKL-B</a
+                  >
+                </p>
+                <p class="link">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-map-pin"
+                  >
+                    <path
+                      d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"
+                    />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <span>54000 Nancy</span>
+                </p>
+                <p class="link">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-car"
+                  >
+                    <path
+                      d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"
+                    />
+                    <circle cx="7" cy="17" r="2" />
+                    <path d="M9 17h6" />
+                    <circle cx="17" cy="17" r="2" />
+                  </svg>
+                  <span>Permis B</span>
+                </p>
+              </div>
+              <!-- langues -->
+              <div class="sub-section sortable-section">
+                <h3 class="section-title">LANGUES</h3>
+                <ul>
+                  <li v-for="(language, index) in languages" :key="index">
+                    {{ language.value }}
+                  </li>
+                </ul>
+              </div>
+              <!-- projects -->
+              <div class="sub-section sortable-section">
+                <h3 class="section-title">PROJETS REALISES</h3>
+                <ul>
+                  <li v-for="project in projects">
+                    <span class="project">{{ project.label }}</span>
+                    <a :href="project.link" target="_blank">{{
+                      project.value
+                    }}</a>
+                  </li>
+                </ul>
+              </div>
+              <!-- interets -->
+              <div class="sub-section sortable-section">
+                <h3 class="section-title">CENTRES D'INTERET</h3>
+                <ul>
+                  <li v-for="(interest, index) in interests" :key="index">
+                    {{ interest.value }}
+                  </li>
+                </ul>
+              </div>
             </section>
           </div>
         </div>
@@ -268,97 +280,106 @@
             mettre en oeuvre des projets innovants, de la conception à la mise
             en production, au sein d'une équipe dynamique.
           </p>
-          <section>
-            <h3 class="section-title">EXPERIENCE PROFESSIONNELLE</h3>
-            <div class="sub-section">
-              <h4>ANALYSTE PROGRAMMEUR - COMPUSOFT LUNEVILLE</h4>
-              <p class="date">septembre 2022 - janvier 2025</p>
-              <ul>
-                <li>Développement d'applications ou de modules.</li>
-                <li>Maintenance d'applications ou de modules existants.</li>
-                <li>Assistance à la clientèle.</li>
-                <li>
-                  Analyse des besoins des clients de la société Compusoft.
-                </li>
-                <li>Application de la méthode Agile (Scrum)</li>
-              </ul>
-            </div>
-            <div class="sub-section">
-              <h4>ANALYSTE PROGRAMMEUR STAGIAIRE - COMPUSOFT LUNEVILLE</h4>
-              <p class="date">mai 2022 - juillet 2022</p>
-              <ul>
-                <li>Maquettage d'un composant de l'application.</li>
-                <li>
-                  Développement de l'interface, des composants métiers, ainsi
-                  que des composants d'accès aux données.
-                </li>
-                <li>
-                  Collaboration à la gestion d'un projet informatique et à
-                  l'organisation de l'environnement de développement.
-                </li>
-                <li>Utilisation du système de gestion de version Git.</li>
-                <li>Application de la méthode Agile (Scrum)</li>
-              </ul>
-            </div>
-            <div class="sub-section">
-              <h4>
-                DÉVELOPPEUR WEB STAGIAIRE - ASSOCIATION KYOSAI TELETRAVAIL
-              </h4>
-              <p class="date">mars 2021 - mai 2021</p>
-              <ul>
-                <li>
-                  Conception et intégration de la maquette pour le web et
-                  mobiles.
-                </li>
-                <li>
-                  Conception et développement de l'interface utilisateur web
-                  dynamique et responsive, avec une solution de gestion de
-                  contenu et e-commerce.
-                </li>
-                <li>Conception de la base de données.</li>
-                <li>Développement de la partie backend.</li>
-                <li>Développement des composants d'accès aux données.</li>
-                <li>Mise en place des tests à l'aide du framework Cypress.</li>
-                <li>Application de la méthode Agile (Kanban)</li>
-              </ul>
-              <div class="project-link">
-                <a
-                  href="https://github.com/MiKL-B/kyosai-front/tree/develop/kyosai-front"
-                  >github.com/MiKL-B/kyosai-front/tree/develop/kyosai-front</a
-                >
-                <a
-                  href="https://github.com/MiKL-B/kyosai-back/tree/develop/kyosai-back"
-                  >github.com/MiKL-B/kyosai-back/tree/develop/kyosai-back</a
-                >
+          <section id="sortable1">
+            <div class="sub-section sortable-section">
+              <h3 class="section-title">EXPERIENCE PROFESSIONNELLE</h3>
+              <!-- exp -->
+              <div>
+                <h4>ANALYSTE PROGRAMMEUR - COMPUSOFT LUNEVILLE</h4>
+                <p class="date">septembre 2022 - janvier 2025</p>
+                <ul>
+                  <li>Développement d'applications ou de modules.</li>
+                  <li>Maintenance d'applications ou de modules existants.</li>
+                  <li>Assistance à la clientèle.</li>
+                  <li>
+                    Analyse des besoins des clients de la société Compusoft.
+                  </li>
+                  <li>Application de la méthode Agile (Scrum)</li>
+                </ul>
+              </div>
+              <!-- exp -->
+              <div>
+                <h4>ANALYSTE PROGRAMMEUR STAGIAIRE - COMPUSOFT LUNEVILLE</h4>
+                <p class="date">mai 2022 - juillet 2022</p>
+                <ul>
+                  <li>Maquettage d'un composant de l'application.</li>
+                  <li>
+                    Développement de l'interface, des composants métiers, ainsi
+                    que des composants d'accès aux données.
+                  </li>
+                  <li>
+                    Collaboration à la gestion d'un projet informatique et à
+                    l'organisation de l'environnement de développement.
+                  </li>
+                  <li>Utilisation du système de gestion de version Git.</li>
+                  <li>Application de la méthode Agile (Scrum)</li>
+                </ul>
+              </div>
+              <!-- exp -->
+              <div>
+                <h4>
+                  DÉVELOPPEUR WEB STAGIAIRE - ASSOCIATION KYOSAI TELETRAVAIL
+                </h4>
+                <p class="date">mars 2021 - mai 2021</p>
+                <ul>
+                  <li>
+                    Conception et intégration de la maquette pour le web et
+                    mobiles.
+                  </li>
+                  <li>
+                    Conception et développement de l'interface utilisateur web
+                    dynamique et responsive, avec une solution de gestion de
+                    contenu et e-commerce.
+                  </li>
+                  <li>Conception de la base de données.</li>
+                  <li>Développement de la partie backend.</li>
+                  <li>Développement des composants d'accès aux données.</li>
+                  <li>
+                    Mise en place des tests à l'aide du framework Cypress.
+                  </li>
+                  <li>Application de la méthode Agile (Kanban)</li>
+                </ul>
+                <div class="project-link">
+                  <a
+                    href="https://github.com/MiKL-B/kyosai-front/tree/develop/kyosai-front"
+                    >github.com/MiKL-B/kyosai-front/tree/develop/kyosai-front</a
+                  >
+                  <a
+                    href="https://github.com/MiKL-B/kyosai-back/tree/develop/kyosai-back"
+                    >github.com/MiKL-B/kyosai-back/tree/develop/kyosai-back</a
+                  >
+                </div>
               </div>
             </div>
-          </section>
-          <section>
-            <h3 class="section-title">FORMATION</h3>
-            <div class="sub-section">
-              <h4>CONCEPTEUR DÉVELOPPEUR D'APPLICATIONS - AFPA FROUARD</h4>
-              <p class="date">septembre 2021 - juillet 2022</p>
-              <p>Titre professionnel de Niveau 6 (Bac +4)</p>
+            <!-- formations -->
+            <div class="sub-section sortable-section">
+              <div>
+                <h3 class="section-title">FORMATION</h3>
+                <h4>CONCEPTEUR DÉVELOPPEUR D'APPLICATIONS - AFPA FROUARD</h4>
+                <p class="date">septembre 2021 - juillet 2022</p>
+                <p>Titre professionnel de Niveau 6 (Bac +4)</p>
+              </div>
+              <div>
+                <h4>DÉVELOPPEUR WEB / WEB MOBILE - AFPA FROUARD</h4>
+                <p class="date">septembre 2020 - juillet 2021</p>
+                <p>Titre professionnel de Niveau 5 (Bac +2)</p>
+              </div>
             </div>
-            <div class="sub-section">
-              <h4>DÉVELOPPEUR WEB / WEB MOBILE - AFPA FROUARD</h4>
-              <p class="date">septembre 2020 - juillet 2021</p>
-              <p>Titre professionnel de Niveau 5 (Bac +2)</p>
-            </div>
-          </section>
-          <section>
-            <h3 class="section-title">COMPETENCES</h3>
-            <div class="skills">
-              <ul>
-                <li v-for="skill in hardskills">
-                  {{ skill.value }}
-                </li>
-              </ul>
-              <ul>
-                <li v-for="skill in softskills">
-                  {{ skill.value }}
-                </li>
-              </ul>
+            <!-- skills -->
+            <div class="sub-section sortable-section">
+              <h3 class="section-title">COMPETENCES</h3>
+              <div class="skills">
+                <ul>
+                  <li v-for="skill in hardskills">
+                    {{ skill.value }}
+                  </li>
+                </ul>
+                <ul>
+                  <li v-for="skill in softskills">
+                    {{ skill.value }}
+                  </li>
+                </ul>
+              </div>
             </div>
           </section>
         </div>
@@ -372,10 +393,11 @@ export default {
   name: "App",
   data() {
     return {
+      isOpen:false,
       fileName: null,
       imageUrl: null,
       name: "BECQUER",
-      firstname:"Michaël",
+      firstname: "Michaël",
       job: "DEVELOPPEUR WEB FRONTEND",
       languages: [{ value: "Français" }, { value: "Anglais" }],
       projects: [
@@ -423,9 +445,26 @@ export default {
       ],
 
       CVName: "CV_Michaël_BECQUER",
+      list1: ["Item 1", "Item 2", "Item 3"],
+      list2: ["Item A", "Item B"],
     };
   },
+  mounted() {
+    $(this.$el).find("#sortable").sortable({
+      items: ".sortable-section",
+      update: this.onSortUpdate,
+    });
+    $(this.$el).find("#sortable1").sortable({
+      items: ".sortable-section",
+      update: this.onSortUpdate,
+    });
+  },
   methods: {
+    onSortUpdate(event, ui) {
+      // Ici, vous pourriez synchroniser l'ordre des sections si nécessaire,
+      // mais si vous ne voulez pas stocker les sections dans un tableau,
+      // vous pouvez laisser cette méthode vide.
+    },
     // photo
     handleFileUpload(event) {
       const file = event.target.files[0];
@@ -434,7 +473,7 @@ export default {
         this.imageUrl = URL.createObjectURL(file); // On crée l'URL de l'objet pour l'image
       } else {
         this.fileName = null;
-        this.imageUrl = null; // Réinitialiser l'URL d'image si aucun fichier n'est sélectionné
+        this.imageUrl = null;
       }
     },
     // language
@@ -478,8 +517,9 @@ export default {
       const opt = {
         //   margin: 0.5,
         filename: this.CVName,
-        image: { type: "png", quality: 0.98 },
-        html2canvas: { scale: 2 },
+        image: { type: "webp", quality: 0.98 },
+        html2canvas: { scale: 1.5, useCORS: true },
+        // scale: 1.5
         jsPDF: { unit: "cm", format: "a4", orientation: "portrait" },
       };
 
@@ -515,5 +555,10 @@ body {
 .field {
   display: flex;
   flex-direction: column;
+}
+
+.sortable-section:hover {
+  cursor: grab;
+  background: rgba(0, 0, 0, 0.1);
 }
 </style>
