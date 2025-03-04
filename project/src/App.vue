@@ -1,13 +1,8 @@
 <template>
   <div id="container">
-    <!--  <ul id="sortable1" class="connectedSortable">
-      <li v-for="item in list1" :key="item">{{ item }}</li>
-    </ul>
-    <ul id="sortable2" class="connectedSortable">
-      <li v-for="item in list2" :key="item">{{ item }}</li>
-    </ul> -->
-    <button @click="isOpen =!isOpen">Menu</button>
+    <button @click="isOpen = !isOpen">Menu</button>
     <div id="left-panel" v-if="isOpen">
+      <h1>Profil</h1>
       <!-- photo -->
       <div class="field">
         <label for="photo">Photo</label>
@@ -34,7 +29,34 @@
         <input id="job" type="text" placeholder="Job" v-model="job" />
       </div>
       <!-- contact -->
+      <h1>Contact</h1>
+      <div class="field">
+        <label for="tel">Telephone</label>
+        <input type="tel" name="tel" id="tel" v-model="phone" />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" v-model="email" />
+      </div>
+      <div class="field">
+        <label for="contactlinks">Links</label>
+        <div
+          name="contactlinks"
+          v-for="(item, index) in contactLinks"
+          :key="index"
+        >
+          <input v-model="item.value" placeholder="Entrer la valeur" />
+          <input v-model="item.link" placeholder="Entrer le lien" />
+          <button @click="removeContactLink(index)">Remove</button>
+        </div>
+        <button @click="addContactLink">Add</button>
+      </div>
+      <div class="field">
+        <label for="address">Address</label>
+        <input type="text" name="address" v-model="address" />
+      </div>
       <!-- languages -->
+      <h1>Langues</h1>
       <div class="field">
         <label for="languages">Langues</label>
         <div v-for="(item, index) in languages" :key="index">
@@ -81,22 +103,53 @@
         </div>
         <button @click="addInterest">Add</button>
       </div>
+      <!-- Section -->
+      <div class="field">
+        <h1>Section</h1>
+        <label for="sections">Sections</label>
+        <div v-for="(section, index) in sections" :key="index">
+          <input v-model="section.name" placeholder="Entrer une valeur" />
+          <button @click="removeSection(index)">Remove section</button>
 
+          <!--  -->
+          <button @click="addSectionItem(section.list)">add Item</button>
+
+          <select v-model="section.selectedType">
+            <option :value="item" v-for="item in section.type" :key="index">
+              {{ item }}
+            </option>
+          </select>
+          <div v-for="(item, index) in section.list" :key="index">
+            <input type="text" v-model="item.name" name="" />
+            <select v-model="item.selectedType">
+              <option
+                :value="subitem"
+                v-for="subitem in item.type"
+                :key="index"
+              >
+                {{ subitem }}
+              </option>
+            </select>
+            <button @click="removeSectionItem(section.list, index)">
+              Remove item
+            </button>
+          </div>
+        </div>
+        <button @click="addSection">Add section</button>
+      </div>
       <button id="generate-pdf" @click="generatePDF">Générer le PDF</button>
     </div>
-    <!-- cv -->
+    <!----------------------------- CV ------------------------------------>
     <div id="right-panel">
       <div id="cv">
         <div id="left-panel-cv">
           <section class="head sub-section">
-            <div class="container-img">
+            <div class="container-img" v-if="imageUrl">
               <div class="img">
-                <img v-if="imageUrl" :src="imageUrl" />
-                <img v-else src="./assets/photo.png" />
+                <img :src="imageUrl" />
               </div>
             </div>
             <div>
-              <!-- <h1>{{ name }}</h1> -->
               <h1 class="name">
                 <span class="firstname">{{ firstname }}</span>
                 <span>{{ name }}</span>
@@ -110,7 +163,7 @@
               <div class="sub-section sortable-section">
                 <h3 class="section-title">CONTACT</h3>
 
-                <p class="link">
+                <p class="link" v-if="phone !== ''">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -127,9 +180,9 @@
                       d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
                     />
                   </svg>
-                  <span>06.89.01.20.66</span>
+                  <span>{{ phone }}</span>
                 </p>
-                <p class="link">
+                <p class="link" v-if="email !== ''">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -145,11 +198,9 @@
                     <rect width="20" height="16" x="2" y="4" rx="2" />
                     <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
                   </svg>
-                  <a href="mailto:michaelbecquer@protonmail.com"
-                    >michaelbecquer@protonmail.com</a
-                  >
+                  <a :href="'mailto:' + email">{{ email }}</a>
                 </p>
-                <p class="link">
+                <p class="link" v-for="item in contactLinks" :key="item.id">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -160,43 +211,19 @@
                     stroke-width="2"
                     stroke-linecap="round"
                     stroke-linejoin="round"
-                    class="lucide lucide-linkedin"
+                    class="lucide lucide-link"
                   >
                     <path
-                      d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                      d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"
                     />
-                    <rect width="4" height="12" x="2" y="9" />
-                    <circle cx="4" cy="4" r="2" />
-                  </svg>
-                  <a
-                    href="https://linkedin.com/in/michaël-becquer-7750a731a"
-                    target="_blank"
-                    >linkedin.com/in/michaelbecquer</a
-                  >
-                </p>
-                <p class="link">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    class="lucide lucide-github"
-                  >
                     <path
-                      d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+                      d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"
                     />
-                    <path d="M9 18c-4.51 2-5-2-7-2" />
                   </svg>
-                  <a href="https://github.com/MiKL-B" target="_blank"
-                    >github.com/MiKL-B</a
-                  >
+                  <a :href="item.link" target="_blank">{{ item.value }}</a>
                 </p>
-                <p class="link">
+
+                <p class="link" v-if="address !== ''">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
@@ -214,7 +241,7 @@
                     />
                     <circle cx="12" cy="10" r="3" />
                   </svg>
-                  <span>54000 Nancy</span>
+                  <span>{{ address }}</span>
                 </p>
                 <p class="link">
                   <svg
@@ -268,6 +295,42 @@
                     {{ interest.value }}
                   </li>
                 </ul>
+              </div>
+              <!-- sections -->
+              <div
+                class="sub-section sortable-section"
+                v-for="section in sections"
+                :key="section.id"
+              >
+                <h3 class="section-title">{{ section.name }}</h3>
+                <ul v-if="section.selectedType === 'list'">
+                  <li v-for="item in section.list">
+                    <svg
+                      v-if="item.selectedType === 'tel'"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="lucide lucide-phone"
+                    >
+                      <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                      />
+                    </svg>
+                    {{ item.name }}
+                  </li>
+                </ul>
+                <div v-else-if="section.selectedType === 'text'">
+                  <p v-for="item in section.list">
+                    <Phone v-if="item.selectedType === 'tel'" />
+                    {{ item.name }}
+                  </p>
+                </div>
               </div>
             </section>
           </div>
@@ -389,64 +452,34 @@
 </template>
 
 <script>
+  import { Phone} from 'lucide-vue-next'
 export default {
   name: "App",
+  components:{
+    Phone
+  },
   data() {
     return {
-      isOpen:false,
+      isOpen: false,
       fileName: null,
       imageUrl: null,
-      name: "BECQUER",
-      firstname: "Michaël",
-      job: "DEVELOPPEUR WEB FRONTEND",
-      languages: [{ value: "Français" }, { value: "Anglais" }],
-      projects: [
-        {
-          label: "Portfolio",
-          link: "https://mikl-b.github.io",
-          value: "mikl-b.github.io",
-        },
-        {
-          label: "Site",
-          link: "https://github.com/MiKL-B/ecommerce",
-          value: "/MiKL-B/ecommerce",
-        },
-        {
-          label: "Fika-CSS",
-          link: "https://fika-css.vercel.app",
-          value: "fika-css.vercel.app",
-        },
-      ],
-      hardskills: [
-        { value: "HTML5, CSS3,JavaScript(ES6)" },
-        { value: "Vue.js, Vue router, Vuex / Pinia, Composition API" },
-        { value: "TailwindCSS" },
-        { value: "Node.js, npm, Vite" },
-        { value: "Intégration API REST" },
-        { value: "Responsive design" },
-        { value: "Tests unitaires, E2E" },
-        { value: "Git" },
-        { value: "Accessibilité web" },
-        { value: "SEO" },
-      ],
-      softskills: [
-        { value: "Communication et collaboration" },
-        { value: "Résolution de problèmes" },
-        { value: "Esprit d'équipe" },
-      ],
-      interests: [
-        { value: "Lecture" },
-        { value: "Peinture" },
-        { value: "Cuisine" },
-        { value: "Voyages" },
-        { value: "Taekwondo" },
-        { value: "Moto" },
-        { value: "Veille technologique" },
-      ],
-
-      CVName: "CV_Michaël_BECQUER",
-      list1: ["Item 1", "Item 2", "Item 3"],
-      list2: ["Item A", "Item B"],
+      // profil
+      name: "",
+      firstname: "",
+      job: "",
+      // contact
+      phone: "",
+      email: "",
+      contactLinks: [],
+      address: "",
+      // language
+      languages: [],
+      projects: [],
+      hardskills: [],
+      softskills: [],
+      interests: [],
+      // sections
+      sections: [],
     };
   },
   mounted() {
@@ -475,6 +508,13 @@ export default {
         this.fileName = null;
         this.imageUrl = null;
       }
+    },
+    // contact
+    addContactLink() {
+      this.contactLinks.push({ value: "" });
+    },
+    removeContactLink(index) {
+      this.contactLinks.splice(index, 1);
     },
     // language
     addLanguage() {
@@ -511,15 +551,37 @@ export default {
     removeInterest(index) {
       this.interests.splice(index, 1);
     },
+    // sections
+    addSection() {
+      let section = {
+        name: "",
+        list: [],
+        type: ["text", "list"],
+        selectedType: "",
+      };
+      this.sections.push(section);
+    },
+    removeSection(index) {
+      this.sections.splice(index, 1);
+    },
+    addSectionItem(list) {
+      let item = {
+        name: "",
+        type: ["text", "tel", "email"],
+        selectedType: "",
+      };
+      list.push(item);
+    },
+    removeSectionItem(list, index) {
+      list.splice(index, 1);
+    },
     // pdf
     generatePDF() {
       const element = document.getElementById("cv");
       const opt = {
-        //   margin: 0.5,
-        filename: this.CVName,
-        image: { type: "webp", quality: 0.98 },
+        filename: "CV",
+        image: { type: "bmp", quality: 0.98 },
         html2canvas: { scale: 1.5, useCORS: true },
-        // scale: 1.5
         jsPDF: { unit: "cm", format: "a4", orientation: "portrait" },
       };
 
@@ -543,6 +605,12 @@ body {
   flex-direction: column;
   padding: 1rem;
   gap: 1rem;
+  height: 99vh;
+  margin: auto;
+  margin-top: 0.5rem;
+  overflow-y: auto;
+  border: 1px solid var(--grey);
+  width: 500px;
 }
 
 #right-panel {
