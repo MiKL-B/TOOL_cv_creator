@@ -28,14 +28,31 @@
         <label for="pitch">Pitch</label>
         <input id="pitch" type="text" placeholder="Pitch" v-model="pitch" />
       </div>
-      <FormSection
+      <QualifForm
+        name="experience"
+        :qualifications="experiences"
+        @add-qualification="addQualification(experiences)"
+        @add-qualification-item="addQualificationItem"
+        @remove-qualification="removeQualification"
+        @remove-qualification-item="removeQualificationItem"
+      />
+      <QualifForm
+        name="formation"
+        :qualifications="formations"
+        @add-qualification="addQualification(formations)"
+        @add-qualification-item="addQualificationItem"
+        @remove-qualification="removeQualification"
+        @remove-qualification-item="removeQualificationItem"
+      />
+
+      <SectionForm
         :list="list1"
         @add-section="addSection"
         @remove-section="removeSection"
         @add-section-item="addSectionItem"
         @remove-section-item="removeSectionItem"
       />
-      <input type="color" name="" v-model="selectedColor">
+      <!-- <input type="color" name="" v-model="selectedColor"> -->
 
       <button id="generate-pdf" @click="generatePDF">Générer le PDF</button>
     </div>
@@ -43,9 +60,9 @@
       <div id="cv">
         <div id="left-panel-cv" :style="{ backgroundColor: selectedColor }">
           <section class="head sub-section">
-            <div class="container-img" v-if="imageUrl">
+            <div class="container-img">
               <div class="img">
-                <img :src="imageUrl" />
+                <img :src="imageUrl" placeholder="img here" />
               </div>
             </div>
             <div>
@@ -57,7 +74,7 @@
             </div>
           </section>
           <div class="sortable" ref="list1">
-            <List :list="list1" />
+            <SectionList :list="list1" />
           </div>
         </div>
         <div id="right-panel-cv">
@@ -65,7 +82,9 @@
             {{ pitch }}
           </p>
           <div ref="list2" class="sortable">
-            <List :list="list2" />
+            <SectionList :list="list2" />
+            <QualifList name="experience" :qualifications="experiences" />
+            <QualifList name="formation" :qualifications="formations" />
           </div>
         </div>
       </div>
@@ -75,13 +94,17 @@
 
 <script>
 import Sortable from "sortablejs";
-import List from "./components/List.vue";
-import FormSection from "./components/FormSection.vue";
+import SectionList from "./components/SectionList.vue";
+import SectionForm from "./components/SectionForm.vue";
+import QualifForm from "./components/QualifForm.vue";
+import QualifList from "./components/QualifList.vue";
 export default {
   name: "App",
   components: {
-    List,
-    FormSection,
+    SectionList,
+    SectionForm,
+    QualifForm,
+    QualifList,
   },
   data() {
     return {
@@ -94,7 +117,10 @@ export default {
       pitch: "",
       list1: [],
       list2: [],
-      selectedColor:"",
+      experiences: [],
+      formations: [],
+      selectedColor: "",
+      isHovered: false,
     };
   },
   mounted() {
@@ -102,6 +128,27 @@ export default {
     this.initSortable(this.$refs.list2);
   },
   methods: {
+    addQualification(list) {
+      let qualification = {
+        name: "",
+        dateFrom: "",
+        dateTo: "",
+        list: [],
+      };
+      list.push(qualification);
+    },
+    addQualificationItem(list) {
+      let item = { name: "" };
+      list.push(item);
+    },
+    removeQualification(data) {
+      const [list, id] = data;
+      list.splice(id, 1);
+    },
+    removeQualificationItem(data){
+      const [list, id] = data;
+      list.splice(id, 1);
+    },
     initSortable(listElement) {
       new Sortable(listElement, {
         group: {

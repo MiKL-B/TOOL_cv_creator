@@ -1,9 +1,8 @@
 <template>
 	<div class="field">
 		<h1>Section</h1>
-		<label for="sections">Sections</label>
 
-		<div v-for="(section,index) in list" :key="index">
+		<div v-for="(section, index) in list" :key="index">
 			<input v-model="section.name" placeholder="Entrer une valeur" />
 			<button @click="removeSection(index)">Remove section</button>
 
@@ -21,6 +20,8 @@
 
 			<div v-for="(item, index) in section.list" :key="index">
 				<input type="text" v-model="item.name" />
+			
+
 				<select v-model="item.selectedType">
 					<option
 						:value="subitem"
@@ -41,22 +42,27 @@
 
 <script>
 export default {
-	name: "FormSection",
-	props:["list"],
-	emits:["remove-section","add-section","add-section-item","remove-section-item"],
-	methods:{
-		addSection(){
-			this.$emit("add-section")
+	name: "SectionForm",
+	props: ["list"],
+	emits: [
+		"remove-section",
+		"add-section",
+		"add-section-item",
+		"remove-section-item",
+	],
+	methods: {
+		addSection() {
+			this.$emit("add-section");
 		},
-		removeSection(id){
-			this.$emit("remove-section",id)
+		removeSection(id) {
+			this.$emit("remove-section", id);
 		},
-		addSectionItem(list){
-			this.$emit("add-section-item",list)
+		addSectionItem(list) {
+			this.$emit("add-section-item", list);
 		},
-		removeSectionItem(list,id){
-			this.$emit("remove-section-item",[list,id])
-		}
-	}
+		removeSectionItem(list, id) {
+			this.$emit("remove-section-item", [list, id]);
+		},
+	},
 };
 </script>
