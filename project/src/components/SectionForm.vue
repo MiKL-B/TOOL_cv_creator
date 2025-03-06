@@ -3,34 +3,14 @@
 		<h1>Section</h1>
 
 		<div v-for="(section, index) in list" :key="index">
-			<input v-model="section.name" placeholder="Entrer une valeur" />
+			<input v-model="section.name" placeholder="Section title..." />
 			<button @click="removeSection(index)">Remove section</button>
 
 			<button @click="addSectionItem(section.list)">add Item</button>
 
-			<select v-model="section.selectedType">
-				<option
-					:value="item"
-					v-for="item in section.type"
-					:key="item.id"
-				>
-					{{ item }}
-				</option>
-			</select>
-
 			<div v-for="(item, index) in section.list" :key="index">
-				<input type="text" v-model="item.name" />
-			
+				<input type="text" v-model="item.name" placeholder="item..."/>
 
-				<select v-model="item.selectedType">
-					<option
-						:value="subitem"
-						v-for="subitem in item.type"
-						:key="index"
-					>
-						{{ subitem }}
-					</option>
-				</select>
 				<button @click="removeSectionItem(section.list, index)">
 					Remove item
 				</button>

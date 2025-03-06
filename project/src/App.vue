@@ -1,7 +1,6 @@
 <template>
   <div id="container">
-    <button @click="isOpen = !isOpen">Menu</button>
-    <div id="left-panel" v-if="!isOpen">
+    <div id="left-panel">
       <h1>Profil</h1>
       <div class="field">
         <label for="photo">Photo</label>
@@ -26,41 +25,62 @@
       </div>
       <div class="field">
         <label for="pitch">Pitch</label>
-        <input id="pitch" type="text" placeholder="Pitch" v-model="pitch" />
+        <textarea
+          v-model="pitch"
+          rows="5"
+          placeholder="Your pitch here..."
+        ></textarea>
       </div>
       <QualifForm
         name="experience"
         :qualifications="experiences"
         @add-qualification="addQualification(experiences)"
-        @add-qualification-item="addQualificationItem"
-        @remove-qualification="removeQualification"
-        @remove-qualification-item="removeQualificationItem"
+        @add-qualification-item="addItem"
+        @remove-qualification="removeItem"
+        @remove-qualification-item="removeItem"
       />
       <QualifForm
         name="formation"
         :qualifications="formations"
         @add-qualification="addQualification(formations)"
-        @add-qualification-item="addQualificationItem"
-        @remove-qualification="removeQualification"
-        @remove-qualification-item="removeQualificationItem"
+        @add-qualification-item="addItem"
+        @remove-qualification="removeItem"
+        @remove-qualification-item="removeItem"
       />
 
       <SectionForm
         :list="list1"
         @add-section="addSection"
         @remove-section="removeSection"
-        @add-section-item="addSectionItem"
+        @add-section-item="addItem"
         @remove-section-item="removeSectionItem"
       />
-      <!-- <input type="color" name="" v-model="selectedColor"> -->
-
+      <div class="field">
+        <label for="color">Accent color</label>
+        <input id="color" type="color" v-model="selectedColor" />
+      </div>
+      <div class="field">
+        <label for="bgcolor">Background left panel color</label>
+        <input
+          id="bgcolor"
+          type="color"
+          v-model="selectedBackgroundLeftColor"
+        />
+      </div>
       <button id="generate-pdf" @click="generatePDF">Générer le PDF</button>
     </div>
     <div id="right-panel">
       <div id="cv">
-        <div id="left-panel-cv" :style="{ backgroundColor: selectedColor }">
+        <div
+          id="left-panel-cv"
+          :style="{ backgroundColor: selectedBackgroundLeftColor }"
+        >
           <section class="head sub-section">
-            <div class="container-img">
+            <div
+              class="container-img"
+              :style="{ border: '1px solid ' + selectedColor }"
+              v-if="imageUrl !== null"
+            >
               <div class="img">
                 <img :src="imageUrl" placeholder="img here" />
               </div>
@@ -70,21 +90,34 @@
                 <span class="firstname">{{ firstname }}</span>
                 <span>{{ name }}</span>
               </h1>
-              <h2 class="job">{{ job }}</h2>
+              <h2 class="job" :style="{ color: selectedColor }">{{ job }}</h2>
             </div>
           </section>
           <div class="sortable" ref="list1">
-            <SectionList :list="list1" />
+            <SectionList :list="list1" :selectedColor="selectedColor" />
           </div>
         </div>
         <div id="right-panel-cv">
-          <p class="text-profile" v-if="pitch.length > 0">
+          <p
+            class="text-profile"
+            :style="{ '--dynamic-color': selectedColor }"
+            v-if="pitch.length > 0"
+          >
             {{ pitch }}
           </p>
+
           <div ref="list2" class="sortable">
-            <SectionList :list="list2" />
-            <QualifList name="experience" :qualifications="experiences" />
-            <QualifList name="formation" :qualifications="formations" />
+            <SectionList :list="list2" :selectedColor="selectedColor" />
+            <QualifList
+              name="experience"
+              :qualifications="experiences"
+              :selectedColor="selectedColor"
+            />
+            <QualifList
+              name="formation"
+              :qualifications="formations"
+              :selectedColor="selectedColor"
+            />
           </div>
         </div>
       </div>
@@ -108,7 +141,6 @@ export default {
   },
   data() {
     return {
-      isOpen: false,
       fileName: null,
       imageUrl: null,
       name: "",
@@ -120,7 +152,7 @@ export default {
       experiences: [],
       formations: [],
       selectedColor: "",
-      isHovered: false,
+      selectedBackgroundLeftColor: "",
     };
   },
   mounted() {
@@ -137,17 +169,24 @@ export default {
       };
       list.push(qualification);
     },
-    addQualificationItem(list) {
-      let item = { name: "" };
-      list.push(item);
+    addItem(list) {
+      list.push({ name: "" });
     },
-    removeQualification(data) {
+    removeItem(data) {
       const [list, id] = data;
       list.splice(id, 1);
     },
-    removeQualificationItem(data){
-      const [list, id] = data;
-      list.splice(id, 1);
+    // sections
+    addSection() {
+      let section = {
+        name: "",
+        list: [],
+      };
+
+      this.list1.push(section);
+    },
+    removeSection(id) {
+      this.list1.splice(id, 1);
     },
     initSortable(listElement) {
       new Sortable(listElement, {
@@ -168,32 +207,6 @@ export default {
       this.imageUrl = URL.createObjectURL(file);
     },
 
-    // sections
-    addSection() {
-      let section = {
-        name: "",
-        list: [],
-        type: ["text", "list"],
-        selectedType: "text",
-      };
-
-      this.list1.push(section);
-    },
-    removeSection(id) {
-      this.list1.splice(id, 1);
-    },
-    addSectionItem(list) {
-      let item = {
-        name: "",
-        type: ["text", "tel", "email"],
-        selectedType: "text",
-      };
-      list.push(item);
-    },
-    removeSectionItem(data) {
-      const [list, id] = data;
-      list.splice(id, 1);
-    },
     // pdf
     generatePDF() {
       const element = document.getElementById("cv");
@@ -214,9 +227,6 @@ export default {
   border: 1px dashed var(--grey);
 }
 
-body {
-  overflow: hidden;
-}
 #container {
   display: flex;
   flex-wrap: wrap;

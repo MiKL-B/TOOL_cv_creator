@@ -1,7 +1,7 @@
 <template>
-	<div class="sub-section sortable-section">
-		<h3 class="section-title">{{name.toUpperCase()}}</h3>
-		<div v-for="qualif in qualifications">
+	<div class="sub-section sortable-section" v-if="qualifications.length > 0">
+		<h3 class="section-title" :style="{ color: selectedColor, borderBottom: '1px solid ' + selectedColor }">{{name.toUpperCase()}}</h3>
+		<div v-for="qualif in qualifications" style="margin-bottom:2rem">
 			<p style="font-weight: bold">{{ qualif.name }}</p>
 			<span
 				style="color: var(--grey)"
@@ -18,6 +18,6 @@
 <script>
 export default {
 	name: "QualifList",
-	props:["name","qualifications"]
+	props:["name","qualifications","selectedColor"]
 };
 </script>
