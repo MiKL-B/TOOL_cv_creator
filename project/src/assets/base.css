@@ -141,7 +141,7 @@ a::after {
   left: -0.1em;
   right: -0.1em;
   bottom: 0;
-  background-color: var(--green-03);
+  color: var(--dynamic-color);
 }
 
 #right-panel-cv {

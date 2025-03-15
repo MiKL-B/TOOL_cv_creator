@@ -35,7 +35,7 @@
         name="experience"
         :qualifications="experiences"
         @add-qualification="addQualification(experiences)"
-        @add-qualification-item="addItem"
+        @add-qualification-item="addItemQualif"
         @remove-qualification="removeItem"
         @remove-qualification-item="removeItem"
       />
@@ -43,7 +43,7 @@
         name="formation"
         :qualifications="formations"
         @add-qualification="addQualification(formations)"
-        @add-qualification-item="addItem"
+        @add-qualification-item="addItemQualif"
         @remove-qualification="removeItem"
         @remove-qualification-item="removeItem"
       />
@@ -53,7 +53,7 @@
         @add-section="addSection"
         @remove-section="removeSection"
         @add-section-item="addItem"
-        @remove-section-item="removeSectionItem"
+        @remove-section-item="removeItem"
       />
       <div class="field">
         <label for="color">Accent color</label>
@@ -90,7 +90,7 @@
                 <span class="firstname">{{ firstname }}</span>
                 <span>{{ name }}</span>
               </h1>
-              <h2 class="job" :style="{ color: selectedColor }">{{ job }}</h2>
+              <h2 class="job" :style="{ color: selectedColor }">{{ job.toUpperCase() }}</h2>
             </div>
           </section>
           <div class="sortable" ref="list1">
@@ -109,12 +109,12 @@
           <div ref="list2" class="sortable">
             <SectionList :list="list2" :selectedColor="selectedColor" />
             <QualifList
-              name="experience"
+              name="expériences"
               :qualifications="experiences"
               :selectedColor="selectedColor"
             />
             <QualifList
-              name="formation"
+              name="formations"
               :qualifications="formations"
               :selectedColor="selectedColor"
             />
@@ -153,6 +153,7 @@ export default {
       formations: [],
       selectedColor: "",
       selectedBackgroundLeftColor: "",
+      selectedOption:""
     };
   },
   mounted() {
@@ -169,8 +170,14 @@ export default {
       };
       list.push(qualification);
     },
-    addItem(list) {
-      list.push({ name: "" });
+    addItemQualif(list){
+      list.push({name:""})
+    },
+    addItem(data) {
+      let list = data[0]
+      let opt = data[1]
+      console.log(opt)
+      list.push({ name: "" ,option:opt,link:""});
     },
     removeItem(data) {
       const [list, id] = data;

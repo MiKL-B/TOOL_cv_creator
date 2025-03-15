@@ -1,9 +1,9 @@
 <template>
 	<button @click="addQualification(list)">add {{ name }}</button>
 	<div v-for="(qualif, index) in qualifications" :key="index">
-		<input type="text" v-model="qualif.name" :placeholder="name + ' title...'"/>
-		<input type="date" v-model="qualif.dateFrom" />
-		<input type="date" v-model="qualif.dateTo" />
+		<input type="text" v-model="qualif.name" :placeholder="name + ' title...'" />
+		<input type="date" v-model="qualif.dateFrom"/>
+		<input type="date" v-model="qualif.dateTo"/>
 		<button @click="addQualificationItem(qualif.list)">addItem</button>
 		<button @click="removeQualification(qualifications, index)">
 			remove {{ name }}
@@ -40,6 +40,7 @@ export default {
 		removeQualificationItem(list, id) {
 			this.$emit("remove-qualification-item", [list, id]);
 		},
+
 	},
 };
 </script>
