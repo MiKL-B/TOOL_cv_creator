@@ -26,16 +26,16 @@
         </span>
         <span class="flex gap-4" v-if="item.option === 'linkedin'">
           <Linkedin />
-          <a :style="{ color: selectedColor, borderBottom: '1px solid ' + selectedColor }" :href="item.link" target="_blank">{{ item.link }}</a>
+          <a :style="{ color: selectedColor, borderBottom: '1px solid ' + selectedColor }" :href="'https://'+item.link" target="_blank">{{ item.link }}</a>
         </span>
         <span class="flex gap-4" v-if="item.option === 'github'">
           <Github />
-          <a :style="{ color: selectedColor, borderBottom: '1px solid ' + selectedColor }" :href="item.link" target="_blank">{{ item.link }}</a>
+          <a :style="{ color: selectedColor, borderBottom: '1px solid ' + selectedColor }" :href="'https://'+item.link" target="_blank">{{ item.link }}</a>
         </span>
         <span class="flex gap-4" v-if="item.option === 'link'">
           <Link />
           {{ item.name }}:
-          <a :style="{ color: selectedColor, borderBottom: '1px solid ' + selectedColor }" :href="item.link" target="_blank">{{ item.link }}</a>
+          <a :style="{ color: selectedColor, borderBottom: '1px solid ' + selectedColor }" :href="'https://'+item.link" target="_blank">{{ item.link }}</a>
         </span>
         <span class="flex gap-4" v-if="item.option === 'position'">
           <MapPin />
