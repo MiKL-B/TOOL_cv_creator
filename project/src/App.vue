@@ -12,12 +12,7 @@
       </div>
       <div class="field">
         <label for="firstname">Firstname</label>
-        <input
-          id="firstname"
-          type="text"
-          placeholder="Firstname"
-          v-model="firstname"
-        />
+        <input id="firstname" type="text" placeholder="Firstname" v-model="firstname" />
       </div>
       <div class="field">
         <label for="job">Job</label>
@@ -25,65 +20,33 @@
       </div>
       <div class="field">
         <label for="pitch">Pitch</label>
-        <textarea
-          v-model="pitch"
-          rows="5"
-          placeholder="Your pitch here..."
-        ></textarea>
+        <textarea v-model="pitch" rows="5" placeholder="Your pitch here..."></textarea>
       </div>
-      <QualifForm
-        name="experience"
-        :qualifications="experiences"
-        @add-qualification="addQualification(experiences)"
-        @add-qualification-item="addItemQualif"
-        @remove-qualification="removeItem"
-        @remove-qualification-item="removeItem"
-      />
-      <QualifForm
-        name="formation"
-        :qualifications="formations"
-        @add-qualification="addQualification(formations)"
-        @add-qualification-item="addItemQualif"
-        @remove-qualification="removeItem"
-        @remove-qualification-item="removeItem"
-      />
+      <QualifForm name="experience" :qualifications="experiences" @add-qualification="addQualification(experiences)"
+        @add-qualification-item="addItemQualif" @remove-qualification="removeItem"
+        @remove-qualification-item="removeItem" />
+      <QualifForm name="formation" :qualifications="formations" @add-qualification="addQualification(formations)"
+        @add-qualification-item="addItemQualif" @remove-qualification="removeItem"
+        @remove-qualification-item="removeItem" />
 
-      <SectionForm
-        :list="list1"
-        @add-section="addSection"
-        @remove-section="removeSection"
-        @add-section-item="addItem"
-        @remove-section-item="removeItem"
-      />
+      <SectionForm :list="list1" @add-section="addSection" @remove-section="removeSection" @add-section-item="addItem"
+        @remove-section-item="removeItem" />
       <div class="field">
         <label for="color">Accent color</label>
         <input id="color" type="color" v-model="selectedColor" />
       </div>
       <div class="field">
         <label for="bgcolor">Background left panel color</label>
-        <input
-          id="bgcolor"
-          type="color"
-          v-model="selectedBackgroundLeftColor"
-        />
+        <input id="bgcolor" type="color" v-model="selectedBackgroundLeftColor" />
       </div>
       <button id="generate-pdf" @click="generatePDF">Générer le PDF</button>
     </div>
     <div id="right-panel">
       <div id="cv">
-        <div
-          id="left-panel-cv"
-          :style="{ backgroundColor: selectedBackgroundLeftColor }"
-        >
+        <div id="left-panel-cv" :style="{ backgroundColor: selectedBackgroundLeftColor }">
           <section class="head sub-section">
-            <div
-              class="container-img"
-              :style="{ border: '1px solid ' + selectedColor }"
-              v-if="imageUrl !== null"
-            >
-              <div class="img">
-                <img :src="imageUrl" placeholder="img here" />
-              </div>
+            <div class="container-img"  v-if="imageUrl !== null">
+              <img :src="imageUrl" placeholder="img here" />
             </div>
             <div>
               <h1 class="name">
@@ -98,26 +61,14 @@
           </div>
         </div>
         <div id="right-panel-cv">
-          <p
-            class="text-profile"
-            :style="{ '--dynamic-color': selectedColor }"
-            v-if="pitch.length > 0"
-          >
+          <p class="text-profile" :style="{ '--dynamic-color': selectedColor }" v-if="pitch.length > 0">
             {{ pitch }}
           </p>
 
           <div ref="list2" class="sortable">
             <SectionList :list="list2" :selectedColor="selectedColor" />
-            <QualifList
-              name="expériences"
-              :qualifications="experiences"
-              :selectedColor="selectedColor"
-            />
-            <QualifList
-              name="formations"
-              :qualifications="formations"
-              :selectedColor="selectedColor"
-            />
+            <QualifList name="expériences" :qualifications="experiences" :selectedColor="selectedColor" />
+            <QualifList name="formations" :qualifications="formations" :selectedColor="selectedColor" />
           </div>
         </div>
       </div>
@@ -153,7 +104,7 @@ export default {
       formations: [],
       selectedColor: "",
       selectedBackgroundLeftColor: "",
-      selectedOption:""
+      selectedOption: ""
     };
   },
   mounted() {
@@ -170,14 +121,14 @@ export default {
       };
       list.push(qualification);
     },
-    addItemQualif(list){
-      list.push({name:""})
+    addItemQualif(list) {
+      list.push({ name: "" })
     },
     addItem(data) {
       let list = data[0]
       let opt = data[1]
       console.log(opt)
-      list.push({ name: "" ,option:opt,link:""});
+      list.push({ name: "", option: opt, link: "" });
     },
     removeItem(data) {
       const [list, id] = data;
@@ -259,6 +210,7 @@ export default {
   overflow-y: auto;
   border: 1px solid var(--grey);
 }
+
 .field {
   display: flex;
   flex-direction: column;
